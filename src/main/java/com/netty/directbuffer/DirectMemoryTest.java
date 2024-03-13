@@ -15,6 +15,14 @@ public class DirectMemoryTest {
             for (int j = 0; j < 200; j++) {
                 buffer.putInt(j);
             }
+
+            /**
+             * 该函数是Java NIO中的Buffer类的一个方法，
+             * 它的作用是将Buffer的当前位置（position）重置为0，
+             * 并将限制（limit）设置为之前的位置。
+             * 在读取数据时，通常先调用flip()方法，
+             * 这样可以将Buffer从写模式切换到读模式。
+             */
             buffer.flip();
             for (int j = 0; j < 200; j++) {
                 buffer.getInt();

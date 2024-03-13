@@ -11,6 +11,13 @@ import io.netty.util.CharsetUtil;
  */
 public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 
+
+    @Override
+    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
+
+        ctx.channel().writeAndFlush(Unpooled.copiedBuffer("欢迎访问Netty服务端！".getBytes(CharsetUtil.UTF_8)));
+    }
+
     /**
      * 读取客户端发送的数据
      *

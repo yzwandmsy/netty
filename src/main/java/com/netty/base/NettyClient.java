@@ -1,12 +1,16 @@
 package com.netty.base;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.util.CharsetUtil;
+
+import java.util.Scanner;
 
 public class NettyClient {
     public static void main(String[] args) throws Exception {
@@ -30,6 +34,16 @@ public class NettyClient {
             System.out.println("netty client start。。");
             //启动客户端去连接服务器端
             ChannelFuture cf = bootstrap.connect("127.0.0.1", 9000).sync();
+
+            Scanner scanner = new Scanner(System.in);
+
+            // 持续发送输入的内容至服务端
+            while (scanner.hasNextLine()) {
+                String msg = scanner.nextLine();
+                cf.channel().writeAndFlush(Unpooled.copiedBuffer(msg.getBytes(CharsetUtil.UTF_8)));
+            }
+
+
             //对通道关闭进行监听
             cf.channel().closeFuture().sync();
         } finally {
